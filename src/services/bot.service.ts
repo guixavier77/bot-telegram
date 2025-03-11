@@ -20,6 +20,8 @@ class BotService {
 				console.log("Bot is running");
 				this.bot.launch();
 				this.startCommands();
+
+				this.finishProcess();
 			} catch (error) {
 				console.error("Error launching the bot:", error);
 			}
@@ -67,6 +69,15 @@ class BotService {
 			
           
     }
+
+		finishProcess(): void {
+			process.once("SIGINT", () => {
+				this.bot.stop("SIGINT");
+			});
+			process.once("SIGTERM", () => {
+				this.bot.stop("SIGTERM");
+			});
+		}
 }
 
 export default BotService;
