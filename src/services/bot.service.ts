@@ -71,12 +71,8 @@ class BotService {
     }
 
 		finishProcess(): void {
-			process.once("SIGINT", () => {
-				this.bot.stop("SIGINT");
-			});
-			process.once("SIGTERM", () => {
-				this.bot.stop("SIGTERM");
-			});
+			process.once("SIGINT", () => this.bot.stop("SIGINT"));
+			process.once("SIGTERM", () => this.bot.stop("SIGTERM"));
 		}
 }
 
