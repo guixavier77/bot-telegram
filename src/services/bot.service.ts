@@ -34,15 +34,18 @@ class BotService {
         });
     }
 
-    commandHelp(ctx: NarrowedContext<Context, Update.MessageUpdate<Message.TextMessage>>) {
-        const helpMessage = `
-            *Lista de comandos:*\n\n
-            🛠️ \`/help\` - *Mostra a lista de comandos do bot*\n
-            🔗 \`/link\` - *Gera um link de afiliado*
-        `;
-        ctx.reply(helpMessage, { parse_mode: "MarkdownV2" });
-    }
-
+		commandHelp(ctx: NarrowedContext<Context, Update.MessageUpdate<Message.TextMessage>>) {
+			ctx.reply(
+					`*Lista de comandos:*\n\n` +
+					`🛠️ \`/help\` \\- *Mostra a lista de comandos do bot*\n` +
+					`🔗 \`/link\` \\- *Gera um link de afiliado*`,
+					{ parse_mode: "MarkdownV2" }
+			);
+		}
+	
+	
+	
+	
     commandMoedas(ctx: NarrowedContext<Context, Update.MessageUpdate<Message.TextMessage>>) {
         const product = {
             name: "Carro",
