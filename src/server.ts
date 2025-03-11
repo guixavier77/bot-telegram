@@ -1,6 +1,5 @@
-import express from 'express';
 import cors from "cors";
-import botRouter from './routes/bot.routes';
+import express from 'express';
 import BotService from './services/bot.service';
 
 const app = express();

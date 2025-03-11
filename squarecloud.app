@@ -1,8 +1,8 @@
 MAIN=src/server.ts
-MEMORY=1024
+MEMORY=512
 VERSION=recommended
-DISPLAY_NAME=back-fideliza
-DESCRIPTION=Back
+DISPLAY_NAME=bot-telegram
+DESCRIPTION=bot
 AUTORESTART=true
-SUBDOMAIN=backfideliza
+SUBDOMAIN=bot-telegram
 START=npm run production
