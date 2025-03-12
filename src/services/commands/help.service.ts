@@ -19,7 +19,7 @@ class CommandHelpService {
             `<b>🤖 Bada Bot</b>`,
             { parse_mode: "HTML" }
         );
-    });
+      });
     }
 }
 

@@ -17,9 +17,9 @@ class ConnectBotService {
 
     connect(): void {
         try {
-						console.log("✅ Bot iniciado com sucesso!");
-						this.bot.launch();
-						const commandsBotService = new CommandsBotService(this.bot);
+					const commandsBotService = new CommandsBotService(this.bot);
+            console.log("✅ Bot iniciado com sucesso!");
+            this.bot.launch();
             commandsBotService.startCommands();
             process.once("SIGINT", () => this.shutdown("SIGINT"));
             process.once("SIGTERM", () => this.shutdown("SIGTERM"));
