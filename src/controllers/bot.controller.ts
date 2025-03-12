@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import UsersService from "../services/bot.service";
+import UsersService from "../services/commandsBot.service";
 const usersService = new UsersService();
 
 export default class BotController {

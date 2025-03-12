@@ -1,6 +1,6 @@
 import cors from "cors";
 import express from 'express';
-import BotService from './services/bot.service';
+import ConnectBotService from './services/connectBot.service';
 
 const app = express();
 const host = process.env.HOST || 'localhost';
@@ -11,6 +11,6 @@ app.use(cors());
 
 
 
-const botService = new BotService();
-botService.connect()
+const connectBotService = new ConnectBotService();
+connectBotService.connect()
 app.listen(parseInt(port), host, () => console.log(`🚀 bot listening on port ${port}.`))
