@@ -8,34 +8,35 @@ class CommandShareService {
     }
 
     start(): void {
-				console.log("🔗 /compartilhar iniciado com sucesso!");
+      console.log("🔗 /compartilhar iniciado com sucesso!");
 
-        this.bot.command("compartilhar", (ctx) => {
-          const text = ctx.message?.text;
-          console.log("Comando recebido:", text); // Log do comando recebido
-      
-          const input = text?.split(" ").slice(1).join(" "); // Pega o link do produto a partir do comando
-          if (!input) {
-              ctx.reply("Por favor, forneça o link de um produto para compartilhar. Exemplo: /compartilhar https://example.com/produto123");
-              return;
-          }
-      
-          const affiliateLink = input;
-          const productName = this.extractProductNameFromURL(affiliateLink); 
-          const socialLinks = this.generateSocialShareLinks(productName, affiliateLink); 
-      
-          const responseMessage = `📱 Compartilhe o produto "${productName}" com seus amigos e ganhe pontos!\n\n` +
-              `Clique nos links abaixo para compartilhar nas suas redes sociais e ajudar a divulgar:\n\n` +
-              `🔗 [Compartilhar no Facebook](${socialLinks.facebook})\n` +
-              `🐦 [Compartilhar no Twitter](${socialLinks.twitter})\n` +
-              `📲 [Compartilhar no WhatsApp](${socialLinks.whatsapp})\n\n` +
-              `Você pode usar o seguinte link para divulgar diretamente: [${productName}](${affiliateLink})`;
-      
-          console.log("Mensagem de resposta:", responseMessage); // Log da mensagem que será enviada ao usuário
-      
-          ctx.reply(responseMessage, {
-              parse_mode: "Markdown",
-          });
+      console.log(this.bot);
+      this.bot.command("compartilhar", (ctx) => {
+        const text = ctx.message?.text;
+        console.log("Comando recebido:", text); // Log do comando recebido
+    
+        const input = text?.split(" ").slice(1).join(" "); // Pega o link do produto a partir do comando
+        if (!input) {
+            ctx.reply("Por favor, forneça o link de um produto para compartilhar. Exemplo: /compartilhar https://example.com/produto123");
+            return;
+        }
+    
+        const affiliateLink = input;
+        const productName = this.extractProductNameFromURL(affiliateLink); 
+        const socialLinks = this.generateSocialShareLinks(productName, affiliateLink); 
+    
+        const responseMessage = `📱 Compartilhe o produto "${productName}" com seus amigos e ganhe pontos!\n\n` +
+            `Clique nos links abaixo para compartilhar nas suas redes sociais e ajudar a divulgar:\n\n` +
+            `🔗 [Compartilhar no Facebook](${socialLinks.facebook})\n` +
+            `🐦 [Compartilhar no Twitter](${socialLinks.twitter})\n` +
+            `📲 [Compartilhar no WhatsApp](${socialLinks.whatsapp})\n\n` +
+            `Você pode usar o seguinte link para divulgar diretamente: [${productName}](${affiliateLink})`;
+    
+        console.log("Mensagem de resposta:", responseMessage); // Log da mensagem que será enviada ao usuário
+    
+        ctx.reply(responseMessage, {
+            parse_mode: "Markdown",
+        });
       });
       
     }
