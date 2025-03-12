@@ -9,7 +9,7 @@ class CommandLinkService {
     }
 
     start(): void {
-        this.bot.command("teste", (ctx) => {
+        this.bot.command("link", (ctx) => {
             const product = {
                 name: "Carro",
                 price: "R$ 10,00",
