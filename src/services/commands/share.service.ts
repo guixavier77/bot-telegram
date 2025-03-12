@@ -12,18 +12,24 @@ class CommandShareService {
 
       console.log(this.bot);
       this.bot.command("compartilhar", (ctx) => {
-        const text = ctx.message?.text;
-        console.log("Comando recebido:", text); // Log do comando recebido
+        console.log("Comando /compartilhar recebido");
     
-        const input = text?.split(" ").slice(1).join(" "); // Pega o link do produto a partir do comando
+        const text = ctx.message?.text;
+        console.log("Texto da mensagem:", text); // Log do comando recebido
+    
+        const input = text?.split(" ").slice(1).join(" ");
         if (!input) {
             ctx.reply("Por favor, forneça o link de um produto para compartilhar. Exemplo: /compartilhar https://example.com/produto123");
             return;
         }
     
         const affiliateLink = input;
-        const productName = this.extractProductNameFromURL(affiliateLink); 
-        const socialLinks = this.generateSocialShareLinks(productName, affiliateLink); 
+        const productName = this.extractProductNameFromURL(affiliateLink);
+        console.log("Link do produto:", affiliateLink);
+        console.log("Nome do produto extraído:", productName);
+    
+        const socialLinks = this.generateSocialShareLinks(productName, affiliateLink);
+        console.log("Links de compartilhamento gerados:", socialLinks);
     
         const responseMessage = `📱 Compartilhe o produto "${productName}" com seus amigos e ganhe pontos!\n\n` +
             `Clique nos links abaixo para compartilhar nas suas redes sociais e ajudar a divulgar:\n\n` +
@@ -32,12 +38,9 @@ class CommandShareService {
             `📲 [Compartilhar no WhatsApp](${socialLinks.whatsapp})\n\n` +
             `Você pode usar o seguinte link para divulgar diretamente: [${productName}](${affiliateLink})`;
     
-        console.log("Mensagem de resposta:", responseMessage); // Log da mensagem que será enviada ao usuário
-    
-        ctx.reply(responseMessage, {
-            parse_mode: "Markdown",
-        });
+        ctx.reply(responseMessage, { parse_mode: "Markdown" });
       });
+    
       
     }
 
