@@ -9,7 +9,7 @@ class CommandLinkService {
     }
 
     start(): void {
-		console.log("🔗 /link iniciado com sucesso!");
+		console.log("✅ /link iniciado com sucesso!");
         this.bot.command("link", (ctx) => {
             const product = {
                 name: "Carro",

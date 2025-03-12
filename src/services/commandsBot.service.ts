@@ -2,7 +2,6 @@ import { Telegraf } from "telegraf";
 import HelpCommand from "./commands/help.service";
 import LinkCommand from "./commands/link.service";
 import UnknownCommand from "./commands/unknow.service";
-import CommandShareService from "./commands/share.service";
 
 interface CommandService {
     start(): void;
@@ -15,10 +14,9 @@ class CommandsBotService {
     constructor(bot: Telegraf) {
         this.bot = bot;
         this.commands = [
-            new HelpCommand(this.bot),
-            new LinkCommand(this.bot),
-            new UnknownCommand(this.bot),
-						new CommandShareService(this.bot)
+					new UnknownCommand(this.bot),
+					new HelpCommand(this.bot),
+					new LinkCommand(this.bot),
         ];
     }
 

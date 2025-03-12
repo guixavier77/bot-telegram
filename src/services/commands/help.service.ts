@@ -9,7 +9,7 @@ class CommandHelpService {
     }
 
     start(): void {
-      console.log("🔗 /help iniciado com sucesso!");
+      console.log("✅ /help iniciado com sucesso!");
 
       this.bot.help((ctx) => {
         ctx.reply(

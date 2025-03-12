@@ -1,6 +1,6 @@
 import { Telegraf } from "telegraf";
 
-const validCommands = ["/help", "/link", "/compartilhar"];
+const validCommands = ["/help", "/link", "/share"];
 class CommandUnknowService {
     private bot: Telegraf;
 
@@ -9,19 +9,19 @@ class CommandUnknowService {
     }
 
     start(): void {
-		    console.log("🔗 unknowcommands iniciado com sucesso!");
-        this.bot.hears(/^\/(\w+)$/, (ctx) => {
-            const command = ctx.message?.text?.trim().toLowerCase();
-            if (command && !validCommands.includes(command)) {
-                ctx.reply(
-                    `🚫 <b>Comando não reconhecido!</b>\n\n` +
-                    `Parece que o comando <b>${command}</b> não está disponível.\n\n` +
-                    `<b>Digite /help para ver os comandos disponíveis.</b> 😊\n\n` +
-                    `<b><i>🤖 Bada Bot</i></b>`,
-                    { parse_mode: "HTML" }
-                );
-            }
-        });
+		    console.log("✅ unknowcommands iniciado com sucesso!");
+        // this.bot.hears(/^\/(\w+)$/, (ctx) => {
+        //     const command = ctx.message?.text?.trim().toLowerCase();
+        //     if (command && !validCommands.includes(command)) {
+        //         ctx.reply(
+        //             `🚫 <b>Comando não reconhecido!</b>\n\n` +
+        //             `Parece que o comando <b>${command}</b> não está disponível.\n\n` +
+        //             `<b>Digite /help para ver os comandos disponíveis.</b> 😊\n\n` +
+        //             `<b><i>🤖 Bada Bot</i></b>`,
+        //             { parse_mode: "HTML" }
+        //         );
+        //     }
+        // });
     }
 }
 
