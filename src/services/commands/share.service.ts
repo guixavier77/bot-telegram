@@ -11,7 +11,7 @@ class CommandShareService {
       console.log("🔗 /compartilhar iniciado com sucesso!");
 
       console.log(this.bot);
-      this.bot.command("compartilhar", (ctx) => {
+      this.bot.command("share", (ctx) => {
         console.log("Comando /compartilhar recebido");
     
         const text = ctx.message?.text;
