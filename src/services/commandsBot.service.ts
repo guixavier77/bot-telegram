@@ -1,24 +1,29 @@
 import { Telegraf } from "telegraf";
-import CommandHelpService from "./commands/help.service";
-import CommandLinkService from "./commands/link.service";
-import CommandUnknowService from "./commands/unknow.service";
+import HelpCommand from "./commands/help.service";
+import LinkCommand from "./commands/link.service";
+import UnknownCommand from "./commands/unknow.service";
+import CommandShareService from "./commands/share.service";
+
+interface CommandService {
+    start(): void;
+}
 
 class CommandsBotService {
     private bot: Telegraf;
+    private commands: CommandService[];
 
     constructor(bot: Telegraf) {
         this.bot = bot;
+        this.commands = [
+            new HelpCommand(this.bot),
+            new LinkCommand(this.bot),
+            new UnknownCommand(this.bot),
+						new CommandShareService(this.bot)
+        ];
     }
 
     startCommands(): void {
-				const commandHelp = new CommandHelpService(this.bot);
-				const commandLink = new CommandLinkService(this.bot);
-				const commandUnknow = new CommandUnknowService(this.bot);
-
-				commandLink.start();
-				commandHelp.start();
-				commandUnknow.start();
-      
+        this.commands.forEach(command => command.start());
     }
 }
 
