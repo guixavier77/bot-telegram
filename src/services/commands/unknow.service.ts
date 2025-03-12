@@ -9,6 +9,7 @@ class CommandUnknowService {
     }
 
     start(): void {
+		    console.log("🔗 unknowcommands iniciado com sucesso!");
         this.bot.hears(/^\/(\w+)$/, (ctx) => {
             const command = ctx.message?.text?.trim().toLowerCase();
             if (command && !validCommands.includes(command)) {

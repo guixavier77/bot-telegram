@@ -8,6 +8,8 @@ class CommandShareService {
     }
 
     start(): void {
+				console.log("🔗 /compartilhar iniciado com sucesso!");
+
         this.bot.command("compartilhar", (ctx) => {
             console.log(ctx);
             const input = ctx.message?.text?.split(" ").slice(1).join(" "); 

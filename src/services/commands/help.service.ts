@@ -9,6 +9,8 @@ class CommandHelpService {
     }
 
     start(): void {
+      console.log("🔗 /help iniciado com sucesso!");
+
       this.bot.help((ctx) => {
         ctx.reply(
             `<b>📋 Lista de comandos:</b>\n\n` +
