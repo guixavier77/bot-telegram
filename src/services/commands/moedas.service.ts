@@ -1,13 +1,20 @@
-import dayjs from 'dayjs';
-import timezone from 'dayjs/plugin/timezone';
-import utc from 'dayjs/plugin/utc';
 import { Telegraf } from 'telegraf';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
 import GenerateLinkService from './generateLink.service';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-class CommandLinkService {
+interface Product {
+  name: string;
+  price: string;
+  url: string;
+  affiliate_link: string;
+}
+
+class CommandMoedasService {
   private bot: Telegraf;
   private generateLinkService = new GenerateLinkService();
 
@@ -16,13 +23,13 @@ class CommandLinkService {
   }
 
   start(): void {
-    console.log("✅ /link iniciado com sucesso!");
-    this.bot.command('link', async (ctx) => {
+    console.log("✅ /moedas iniciado com sucesso!");
+    this.bot.command('moedas', async (ctx) => {
       const messageText = ctx.message.text;
       const urls = this.generateLinkService.validateAndExtractUrls(messageText);
 
       if (!urls || urls.length === 0) {
-        return this.generateLinkService.sendHelpMessage(ctx, '/link');
+        return this.generateLinkService.sendHelpMessage(ctx, '/moedas');
       }
 
       const linkProduct = this.cleanProductLink(urls[0]);
@@ -38,10 +45,28 @@ class CommandLinkService {
       }
     });
   }
+  sendProductLink(ctx: any, product: Product): void {
+    ctx.reply(
+      `💰\n`+
+      `<b>#AliExpress</b>\n\n` +
+      `<b><i>${product.name}</i></b>\n` +
+      `Link: ${product.affiliate_link}\n\n` +
+      `<b>https://t.me/ultraofertas</b>\n\n`,
+      {
+        parse_mode: 'HTML',
+        reply_markup: {
+          inline_keyboard: [
+            [{ text: '🔗 Ver no AliExpress', url: product.affiliate_link }]
+          ]
+        }
+      }
+    );
+  }
 
   private cleanProductLink(link: string): string {
-    return link.split(".html")[0] + ".html";
+    return link.split(".html")[0] + ".html" + "?sourceType=620&BuyNow=true&improveDiscount=Y&channel=coin";
   }
+
 }
 
-export default CommandLinkService;
+export default CommandMoedasService;

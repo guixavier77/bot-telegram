@@ -2,6 +2,7 @@ import { Telegraf } from "telegraf";
 import HelpCommand from "./commands/help.service";
 import LinkCommand from "./commands/link.service";
 import UnknownCommand from "./commands/unknow.service";
+import CommandMoedasService from "./commands/moedas.service";
 
 interface CommandService {
     start(): void;
@@ -9,19 +10,15 @@ interface CommandService {
 
 class CommandsBotService {
     private bot: Telegraf;
-    private commands: CommandService[];
-
-    constructor(bot: Telegraf) {
+       constructor(bot: Telegraf) {
         this.bot = bot;
-        this.commands = [
-					new UnknownCommand(this.bot),
-					new HelpCommand(this.bot),
-					new LinkCommand(this.bot),
-        ];
     }
 
     startCommands(): void {
-        this.commands.forEach(command => command.start());
+        new HelpCommand(this.bot).start();
+        new LinkCommand(this.bot).start();
+        new CommandMoedasService(this.bot).start();
+        new UnknownCommand(this.bot).start();
     }
 }
 
