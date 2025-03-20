@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules --respawn src/server.ts",
     "production": "npm install --legacy-peer-deps && npm run build && npm run start",
-    "start": "node dist/server.js",
+    "start": "node dist/src/server.js",
     "build": "tsc"
   },
   "dependencies": {
