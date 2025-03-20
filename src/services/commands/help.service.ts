@@ -30,7 +30,13 @@ class CommandHelpService {
                       console.error("Erro ao tentar avisar o usuário:", err);
                   }
               }
-          }
+          } finally {
+            try {
+                await ctx.deleteMessage();
+            } catch (deleteError) {
+                console.warn("⚠️ Não foi possível deletar a mensagem:", deleteError.message);
+            }
+        }
       });
   }
   

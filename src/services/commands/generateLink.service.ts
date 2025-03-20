@@ -111,7 +111,7 @@ class GenerateLinkService {
   sendHelpMessage(ctx: any, command: string): void {
     ctx.reply(
       `<b>⚠️ Instrução Importante:</b>\n\n` +
-      `Para gerar o link de um produto, utilize o comando <code>${command}</code> seguido do URL do produto.\n\n` +
+      `Para gerar o link de um produto${command ? ' com moedas' : ''}, utilize o comando <code>${command}</code> seguido do URL do produto.\n\n` +
       `Exemplo de uso:\n` +
       `<code>${command} https://example.com/produto123</code>\n\n` +
       `<b>🤖 Bada Bot</b>`,
