@@ -28,7 +28,7 @@ class ConnectBotService {
                 `🛠️ <b>/help</b> - <i>Mostra a lista de comandos</i>\n` +
                 `🔗 <b>/link</b> - <i>Gera um link de afiliado</i>\n` +
                 `💰 <b>/moedas</b> - <i>Gera um link de afiliado com moedas</i>\n\n` +
-                `<b>🤖 Bada Bot</b>`,
+                `<b>🤖 Ofertas Bot</b>`,
                 { parse_mode: "HTML" }
             );
         

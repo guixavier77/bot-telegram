@@ -20,7 +20,7 @@ class CommandUnknowService {
                         `🚫 <b>Comando não reconhecido!</b>\n\n` +
                         `Parece que o comando <b>${command}</b> não está disponível.\n\n` +
                         `<b>Digite /help para ver os comandos disponíveis.</b> 😊\n\n` +
-                        `<b><i>🤖 Bada Bot</i></b>`,
+                        `<b><i>🤖 Ofertas Bot</i></b>`,
                         { parse_mode: "HTML" }
                     );
                 }

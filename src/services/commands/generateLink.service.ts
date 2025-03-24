@@ -1,12 +1,7 @@
-import { Telegraf } from 'telegraf';
-import crypto from 'crypto';
-import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
-import timezone from 'dayjs/plugin/timezone';
 import axios from 'axios';
+import crypto from 'crypto';
 
-dayjs.extend(utc);
-dayjs.extend(timezone);
+
 
 interface Product {
   name: string;
@@ -114,7 +109,7 @@ class GenerateLinkService {
       `Para gerar o link de um produto${command ? ' com moedas' : ''}, utilize o comando <code>${command}</code> seguido do URL do produto.\n\n` +
       `Exemplo de uso:\n` +
       `<code>${command} https://example.com/produto123</code>\n\n` +
-      `<b>🤖 Bada Bot</b>`,
+      `<b>🤖 Ofertas Bot</b>`,
       { parse_mode: 'HTML' }
     );
   }
