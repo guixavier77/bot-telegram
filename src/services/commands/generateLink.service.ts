@@ -1,13 +1,14 @@
+
 import axios from 'axios';
 import crypto from 'crypto';
-
-
 
 interface Product {
   name: string;
   price: string;
   url: string;
+  image_url: string;
   affiliate_link: string;
+  store: string;
 }
 
 class GenerateLinkService {
@@ -31,30 +32,32 @@ class GenerateLinkService {
   }
 
   async getProductSkuDetails(productId: string): Promise<any | null> {
-    const url = 'https://api-sg.aliexpress.com/sync';
+    const url = "https://api-sg.aliexpress.com/sync";
+    
     const params: Record<string, string> = {
       app_key: process.env.BOT_APP_KEY!,
-      method: 'aliexpress.affiliate.product.sku.detail.get',
-      timestamp: this.convertToString(new Date().getTime()), 
-      v: '2.0',
+      method: "aliexpress.affiliate.product.sku.detail.get",
+      timestamp: Date.now().toString(),
+      v: "2.0",
       product_id: productId,
-      ship_to_country: 'BR',
-      target_currency: 'BRL',
-      target_language: 'pt',
-      sign_method: 'sha256',
+      ship_to_country: "BR",
+      target_currency: "BRL",
+      target_language: "pt",
+      sign_method: "sha256",
     };
-
-    params['sign'] = this.generateSignature(params);
-
+  
+    params["sign"] = this.generateSignature(params);
+  
     try {
-      const response = await axios.get(url, { params });
-      return response.data;
+      const { data } = await axios.get(url, { params });
+      console.log(data);
+      return data;
     } catch (error) {
-      console.error('Erro ao obter detalhes do SKU do produto:', error);
+      console.error("Erro ao obter detalhes do SKU do produto:", error);
       return null;
     }
   }
-
+  
 
   private extractProductId(url: string): string | null {
     const match = url.match(/\/item\/(\d+)\.html/);
@@ -82,8 +85,8 @@ class GenerateLinkService {
     try {
       const response = await axios.get(url, { params });
       const data = response.data;
-      console.log(data);
-      const affiliateLink = data.aliexpress_affiliate_link_generate_response.resp_result.result.promotion_links.promotion_link;
+    
+      const affiliateLink = data?.aliexpress_affiliate_link_generate_response?.resp_result?.result?.promotion_links?.promotion_link ?? '';
 
       const productId = this.extractProductId(link);
       const productDetails = await this.getProductSkuDetails(productId!);
@@ -91,9 +94,14 @@ class GenerateLinkService {
         return null;
       }
 
+      console.log(productDetails.aliexpress_affiliate_product_sku_detail_get_response?.result?.result?.ae_item_info)
+
+      if(!affiliateLink) throw new Error('Erro ao gerar o link de afiliado');
       return {
-        name: 'Produto',
+        name: productDetails.aliexpress_affiliate_product_sku_detail_get_response?.result?.result?.ae_item_info?.title ?? "Não identificado",
         price: 'R$ 0,00', 
+        image_url: productDetails.aliexpress_affiliate_product_sku_detail_get_response?.result?.result?.ae_item_info?.image_link,
+        store: productDetails.aliexpress_affiliate_product_sku_detail_get_response?.result?.result?.ae_item_info?.store_name,
         url: link,
         affiliate_link: affiliateLink[0].promotion_link,
       };
@@ -118,14 +126,20 @@ class GenerateLinkService {
     ctx.reply(`⚠️ ${message}`);
   }
 
-  sendProductLink(ctx: any, product: Product): void {
-    ctx.reply(
-      `<b>#AliExpress</b>\n\n` +
-      `<b><i>${product.name}</i></b>\n` +
-      `Link: ${product.affiliate_link}\n\n` +
-      `<b>https://t.me/ultraofertas</b>\n\n`,
+  async sendProductLink(ctx: any, product: Product): Promise<void> {
+    if (!product.affiliate_link) return;
+  
+    const imageUrl = product?.image_url ?? '';
+  
+    await ctx.replyWithPhoto(
+      imageUrl,
       {
-        parse_mode: 'HTML',
+        caption: `<b>#AliExpress</b>\n\n` +
+                `<b>${product?.store}</b>\n\n` +
+                `<b><i>${product?.name ?? 'N/A'}</i></b>\n\n` +
+                `Link: ${product.affiliate_link}\n\n` +
+                `<b>https://t.me/ultraofertas</b>\n\n`,
+        parse_mode: 'HTML', 
         reply_markup: {
           inline_keyboard: [
             [{ text: '🔗 Ver no AliExpress', url: product.affiliate_link }]
@@ -134,6 +148,8 @@ class GenerateLinkService {
       }
     );
   }
+  
+  
 
   validateAndExtractUrls(messageText: string): string[] | null {
     const urlRegex = /(https?:\/\/[^\s]+)/g;
@@ -147,12 +163,17 @@ class GenerateLinkService {
     }
 
     const product = await this.getAffiliateLink(link);
+
     if (!product) {
       throw new Error("Produto não encontrado ou indisponível.");
     }
 
     return product;
   }
+
+
+
+
 }
 
 export default GenerateLinkService;
